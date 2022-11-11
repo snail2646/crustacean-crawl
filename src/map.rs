@@ -15,7 +15,7 @@ pub struct Map {
 impl Map {
     pub fn new() -> Self {
         Map {
-            tiles: vec![TileType::Floor, NUM_TILES],
+            tiles: vec![TileType::Floor; NUM_TILES],
         }
     }
 }
