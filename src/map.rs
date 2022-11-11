@@ -11,3 +11,11 @@ pub enum TileType {
 pub struct Map {
     pub tiles: Vec<TileType>,
 }
+
+impl Map {
+    pub fn new() -> Self {
+        Map {
+            tiles: vec![TileType::Floor, NUM_TILES],
+        }
+    }
+}
