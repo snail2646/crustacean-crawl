@@ -12,18 +12,23 @@ use prelude::*;
 
 struct State {
     map: Map,
+    player: Player,
 }
 
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
         ctx.cls();
         self.map.render(ctx);
+        self.player.render(ctx);
     }
 }
 
 impl State {
     fn new() -> Self {
-        Self { map: Map::new() }
+        Self {
+            map: Map::new(),
+            player: Player::new(Point::new(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2)),
+        }
     }
 }
 fn main() -> BError {
