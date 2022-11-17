@@ -42,6 +42,12 @@ fn main() -> BError {
     let context = BTermBuilder::simple80x50()
         .with_title("Crustacean Crawl")
         .with_fps_cap(30.0)
+        .with_dimensions(DISPLAY_WIDTH, DISPLAY_HEIGHT)
+        .with_tile_dimensions(32, 32)
+        .with_resource_path("resources/")
+        .with_font("mssgyymm.bmp", 32, 32)
+        .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, "mssgyymm.bmp")
+        .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, "mssgyymm.bmp")
         .build()?;
     main_loop(context, State::new())
 }
