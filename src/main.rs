@@ -46,7 +46,9 @@ fn main() -> BError {
         .with_tile_dimensions(32, 32)
         .with_resource_path("resources/")
         .with_font("mssgyymm.bmp", 32, 32)
+        // Map layer
         .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, "mssgyymm.bmp")
+        // Player layer
         .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, "mssgyymm.bmp")
         .build()?;
     main_loop(context, State::new())
