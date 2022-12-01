@@ -1,7 +1,9 @@
+mod camera;
 mod map;
 mod map_builder;
 mod player;
 mod prelude {
+    pub use crate::camera::*;
     pub use crate::map::*;
     pub use crate::map_builder::*;
     pub use crate::player::*;
@@ -17,14 +19,18 @@ use prelude::*;
 struct State {
     map: Map,
     player: Player,
+    camera: Camera,
 }
 
 impl GameState for State {
     fn tick(&mut self, ctx: &mut BTerm) {
+        ctx.set_active_console(0);
         ctx.cls();
-        self.player.update(ctx, &self.map);
-        self.map.render(ctx);
-        self.player.render(ctx);
+        ctx.set_active_console(1);
+        ctx.cls();
+        self.player.update(ctx, &self.map, &mut self.camera);
+        self.map.render(ctx, &self.camera);
+        self.player.render(ctx, &self.camera);
     }
 }
 
@@ -35,6 +41,7 @@ impl State {
         Self {
             map: map_builder.map,
             player: Player::new(map_builder.player_start),
+            camera: Camera::new(map_builder.player_start),
         }
     }
 }
@@ -45,11 +52,11 @@ fn main() -> BError {
         .with_dimensions(DISPLAY_WIDTH, DISPLAY_HEIGHT)
         .with_tile_dimensions(32, 32)
         .with_resource_path("resources/")
-        .with_font("mssgyymm.bmp", 32, 32)
+        .with_font("dungeonfont.png", 32, 32)
         // Map layer
-        .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, "mssgyymm.bmp")
+        .with_simple_console(DISPLAY_WIDTH, DISPLAY_HEIGHT, "dungeonfont.png")
         // Player layer
-        .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, "mssgyymm.bmp")
+        .with_simple_console_no_bg(DISPLAY_WIDTH, DISPLAY_HEIGHT, "dungeonfont.png")
         .build()?;
     main_loop(context, State::new())
 }
